@@ -15,8 +15,15 @@ class Setting:
         ## head start location ##
         self.head_start = [5, 5]
         
-        ## body object ##
-        body1 = Body(self.head_start[0] - 1, self.head_start[1])
-        body2 = Body(self.head_start[0] - 2, self.head_start[1], prev_node = body1)
-        self.bodies = [body1, body2]
+        ## body object ##        
+        temp1 = self.head_start[:]
+        body1 = Body(temp1)
+        body1.location[0] -= 1
+        body1.update_pos()
+
+        temp2 = self.head_start[:]
+        body2 = Body(temp2, prev_node = body1)
+        body2.location[0] -= 2
+        body2.update_pos()
         
+        self.bodies = [body1, body2]

@@ -12,10 +12,10 @@ def check_evnets(setting, head, apple):
             key_down_events(setting, event, head, apple)
         
 def key_down_events(setting, event, head, apple):
-    head.head_move(event)
+    head.head_move(setting, event)
         
     if event.key == pygame.K_a:
-        apple.update_location()
+        apple.update_pos()
         
     if head.x_pos < 1 or head.x_pos > 502 or head.y_pos < 0 or head.y_pos > 502:
         print("game over")
@@ -42,8 +42,13 @@ def collide_head_apple(setting, head, apple):
     apple_rect.top = apple.y_pos
     
     if head_rect.colliderect(apple_rect):
-        apple.update_location()
-        new_body = Body(1, 1)
+        apple.update_update_pos()
+        
+        new_body = Body(head.last_tail_location, prev_node = head.tail)
+        new_body.update_pos()
+        
+        head.tail.next = new_body
+        head.tail = new_body
         setting.bodies.append(new_body)
         
         

@@ -1,5 +1,6 @@
 # snake game function
 import pygame
+from snake_object import Body
 
 def check_evnets(setting, head, apple):
     """이벤트에 응답"""
@@ -8,32 +9,46 @@ def check_evnets(setting, head, apple):
             setting.running = False
             
         if event.type == pygame.KEYDOWN:
-            key_down_events(event, head, apple)
+            key_down_events(setting, event, head, apple)
         
-def key_down_events(event, head, apple):
-    if event.key == pygame.K_RIGHT:
-        head.x_pos += 25
-        head.rotated_image = pygame.transform.rotate(head.image, head.heading_right)
-        
-    elif event.key == pygame.K_LEFT:
-        head.x_pos -= 25
-        head.rotated_image = pygame.transform.rotate(head.image, head.heading_left)
-        
-    elif event.key == pygame.K_UP:
-        head.y_pos -= 25
-        head.rotated_image = pygame.transform.rotate(head.image, head.heading_up)
-        
-    elif event.key == pygame.K_DOWN:
-        head.y_pos += 25
-        head.rotated_image = pygame.transform.rotate(head.image, head.heading_down) 
+def key_down_events(setting, event, head, apple):
+    head.head_move(event)
         
     if event.key == pygame.K_a:
-        apple.update_apple_location()
+        apple.update_location()
+        
+    if head.x_pos < 1 or head.x_pos > 502 or head.y_pos < 0 or head.y_pos > 502:
+        print("game over")
+        setting.running = False
 
-def screen_update(screen, background, wall, head, apple):
+def screen_update(screen, setting, background, wall, head, apple):
     screen.blit(background.image, (background.x_pos, background.y_pos))
     screen.blit(wall.image, (wall.x_pos, wall.y_pos))
     screen.blit(head.rotated_image, (head.x_pos, head.y_pos))
     screen.blit(apple.image, (apple.x_pos, apple.y_pos))
+    for body in setting.bodies:
+        screen.blit(body.image, (body.x_pos, body.y_pos))
     
     pygame.display.update()
+    
+def collide_head_apple(setting, head, apple):
+    
+    head_rect = head.image.get_rect()
+    head_rect.left = head.x_pos
+    head_rect.top = head.y_pos
+    
+    apple_rect = apple.image.get_rect()
+    apple_rect.left = apple.x_pos
+    apple_rect.top = apple.y_pos
+    
+    if head_rect.colliderect(apple_rect):
+        apple.update_location()
+        new_body = Body(1, 1)
+        setting.bodies.append(new_body)
+        
+        
+    
+    
+    
+    
+    

@@ -9,6 +9,6 @@ class Apple:
         self.x_pos = random.randint(0, 19) * 25 + 1
         self.y_pos = random.randint(0, 19) * 25 + 1
     
-    def update_apple_location(self):
+    def update_location(self):
         self.x_pos = random.randint(0, 19) * 25 + 1
         self.y_pos = random.randint(0, 19) * 25 + 1

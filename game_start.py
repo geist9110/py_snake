@@ -26,5 +26,6 @@ def run_game():
         gf.check_evnets(setting, head, apple)
         gf.screen_update(screen, setting, background, wall, head, apple)
         gf.collide_head_apple(setting, head, apple)
+        gf.collide_head_body(setting, head)
     pygame.quit()
 #######################################

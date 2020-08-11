@@ -53,8 +53,25 @@ def collide_head_apple(setting, head, apple):
         apple.check_location(head)
         apple.update_pos()
         
+def collide_head_body(setting, head):
+    head_rect = head.image.get_rect()
+    head_rect.left = head.x_pos
+    head_rect.top = head.y_pos
     
+    body = head.next
     
+    while body != None:
+        body_rect = body.image.get_rect()
+        body_rect.left = body.x_pos
+        body_rect.top = body.y_pos
+        
+        if head_rect.colliderect(body_rect):
+            setting.running = False
+            print("Game over")
+            break;
+            
+        else:
+            body = body.next
     
     
     

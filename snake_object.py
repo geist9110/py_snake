@@ -55,6 +55,7 @@ class Head(Snake):
         
     def body_move(self):
         self.tail.prev.next = None
+        self.tail.next = self.next
         self.next.prev = self.tail
         self.tail = self.tail.prev
         self.next.prev.prev = self

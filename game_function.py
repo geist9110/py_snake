@@ -41,9 +41,7 @@ def collide_head_apple(setting, head, apple):
     apple_rect.left = apple.x_pos
     apple_rect.top = apple.y_pos
     
-    if head_rect.colliderect(apple_rect):
-        apple.update_update_pos()
-        
+    if head_rect.colliderect(apple_rect):        
         new_body = Body(head.last_tail_location, prev_node = head.tail)
         new_body.update_pos()
         
@@ -51,6 +49,9 @@ def collide_head_apple(setting, head, apple):
         head.tail = new_body
         setting.bodies.append(new_body)
         
+        apple.update_location()
+        apple.check_location(head)
+        apple.update_pos()
         
     
     
